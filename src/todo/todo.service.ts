@@ -6,16 +6,87 @@ import { Todo } from './entity/todo.entity';
 @Injectable()
 export class TodoService {
   private todos: Todo[] = [
-    { id: 1, description: 'Completar el curso de NestJS', done: true },
-    { id: 2, description: 'Diseñar el backend del proyecto', done: true },
-    { id: 3, description: 'Construir el backend', done: true },
-    { id: 4, description: 'Tomar curso de Angular', done: false },
-    { id: 5, description: 'Tomar curso sobre patrones', done: false },
-    { id: 6, description: 'Aplicar teoría de patrones', done: false },
-    { id: 7, description: 'Crear documentación', done: false },
-    { id: 8, description: 'Levantar servidores', done: false },
-    { id: 9, description: 'Pagar publicidad del sistema', done: false },
-    { id: 10, description: 'Comenzar con el soporte a usuarios', done: false },
+    {
+      id: 1,
+      name: 'Diseñar el backend del proyecto',
+      description: 'Realizar el diseño del backend',
+      startDate: '2023-11-03T08:30:00.000Z',
+      endDate: '2023-11-06T08:30:00.000Z',
+      status: true,
+      order: 1,
+    },
+    {
+      id: 2,
+      name: 'Construir el backend',
+      description: 'Desarrollar el backend del proyecto',
+      startDate: '2023-11-04T08:30:00.000Z',
+      endDate: '2023-11-09T08:30:00.000Z',
+      status: true,
+      order: 2,
+    },
+    {
+      id: 3,
+      name: 'Tomar curso de Angular',
+      description: 'Aprender Angular',
+      startDate: '2023-11-05T08:30:00.000Z',
+      endDate: '2023-11-10T08:30:00.000Z',
+      status: true,
+      order: 3,
+    },
+    {
+      id: 4,
+      name: 'Tomar curso sobre patrones',
+      description: 'Aprender sobre patrones de diseño',
+      startDate: '2023-11-06T08:30:00.000Z',
+      endDate: '2023-11-09T08:30:00.000Z',
+      status: false,
+      order: 4,
+    },
+    {
+      id: 5,
+      name: 'Aplicar teoría de patrones',
+      description: 'Aplicar patrones de diseño',
+      startDate: '2023-11-07T08:30:00.000Z',
+      endDate: '2023-11-10T08:30:00.000Z',
+      status: false,
+      order: 5,
+    },
+    {
+      id: 6,
+      name: 'Crear documentación',
+      description: 'Generar documentación del proyecto',
+      startDate: '2023-11-08T08:30:00.000Z',
+      endDate: '2023-11-11T08:30:00.000Z',
+      status: true,
+      order: 6,
+    },
+    {
+      id: 7,
+      name: 'Levantar servidores',
+      description: 'Configurar los servidores',
+      startDate: '2023-11-09T08:30:00.000Z',
+      endDate: '2023-11-12T08:30:00.000Z',
+      status: false,
+      order: 7,
+    },
+    {
+      id: 8,
+      name: 'Pagar publicidad del sistema',
+      description: 'Realizar pagos de publicidad',
+      startDate: '2023-11-10T08:30:00.000Z',
+      endDate: '2023-11-13T08:30:00.000Z',
+      status: true,
+      order: 8,
+    },
+    {
+      id: 9,
+      name: 'Comenzar con el soporte a usuarios',
+      description: 'Iniciar el soporte técnico',
+      startDate: '2023-11-11T08:30:00.000Z',
+      endDate: '2023-11-14T08:30:00.000Z',
+      status: false,
+      order: 9,
+    },
   ];
 
   get totalTodos() {
@@ -23,17 +94,17 @@ export class TodoService {
   }
 
   get completedTodos() {
-    return this.todos.filter((todo) => todo.done === true).length;
+    return this.todos.filter((todo) => todo.status === true).length;
   }
 
   get pendingTodos() {
-    return this.todos.filter((todo) => todo.done === false).length;
+    return this.todos.filter((todo) => todo.status === false).length;
   }
 
   findAll(statusArgs: StatusArgs): Todo[] {
     const { status } = statusArgs;
     if (status !== undefined)
-      return this.todos.filter((todo) => todo.done === status);
+      return this.todos.filter((todo) => todo.status === status);
     return this.todos;
   }
 
@@ -50,7 +121,7 @@ export class TodoService {
   create(createTodoInput: CreateTodoInput): Todo {
     const todo = new Todo();
     todo.description = createTodoInput.description;
-    todo.done = false;
+    todo.status = false;
     todo.id = Math.max(...this.todos.map((todo) => todo.id), 0) + 1;
     this.todos.push(todo);
     return todo;
@@ -61,7 +132,7 @@ export class TodoService {
     const todoToUpdate = this.findOne(id);
 
     if (description) todoToUpdate.description = description;
-    if (done !== undefined) todoToUpdate.done = done;
+    if (done !== undefined) todoToUpdate.status = done;
 
     this.todos = this.todos.map((todo) => {
       //return (todo.id === id) ? todoToUpdate : todo; (Es lo mismo que abajo pero con el operador ternario)
