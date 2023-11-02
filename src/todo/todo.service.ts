@@ -12,7 +12,7 @@ export class TodoService {
       description: 'Realizar el diseño del backend',
       startDate: '2023-11-03T08:30:00.000Z',
       endDate: '2023-11-06T08:30:00.000Z',
-      status: true,
+      status: 'NEW',
       order: 1,
     },
     {
@@ -21,7 +21,7 @@ export class TodoService {
       description: 'Desarrollar el backend del proyecto',
       startDate: '2023-11-04T08:30:00.000Z',
       endDate: '2023-11-09T08:30:00.000Z',
-      status: true,
+      status: 'NEW',
       order: 2,
     },
     {
@@ -30,7 +30,7 @@ export class TodoService {
       description: 'Aprender Angular',
       startDate: '2023-11-05T08:30:00.000Z',
       endDate: '2023-11-10T08:30:00.000Z',
-      status: true,
+      status: 'DONE',
       order: 3,
     },
     {
@@ -39,7 +39,7 @@ export class TodoService {
       description: 'Aprender sobre patrones de diseño',
       startDate: '2023-11-06T08:30:00.000Z',
       endDate: '2023-11-09T08:30:00.000Z',
-      status: false,
+      status: 'INPROGRESS',
       order: 4,
     },
     {
@@ -48,7 +48,7 @@ export class TodoService {
       description: 'Aplicar patrones de diseño',
       startDate: '2023-11-07T08:30:00.000Z',
       endDate: '2023-11-10T08:30:00.000Z',
-      status: false,
+      status: 'NEW',
       order: 5,
     },
     {
@@ -57,7 +57,7 @@ export class TodoService {
       description: 'Generar documentación del proyecto',
       startDate: '2023-11-08T08:30:00.000Z',
       endDate: '2023-11-11T08:30:00.000Z',
-      status: true,
+      status: 'NEW',
       order: 6,
     },
     {
@@ -66,7 +66,7 @@ export class TodoService {
       description: 'Configurar los servidores',
       startDate: '2023-11-09T08:30:00.000Z',
       endDate: '2023-11-12T08:30:00.000Z',
-      status: false,
+      status: 'DONE',
       order: 7,
     },
     {
@@ -75,7 +75,7 @@ export class TodoService {
       description: 'Realizar pagos de publicidad',
       startDate: '2023-11-10T08:30:00.000Z',
       endDate: '2023-11-13T08:30:00.000Z',
-      status: true,
+      status: 'DONE',
       order: 8,
     },
     {
@@ -84,7 +84,7 @@ export class TodoService {
       description: 'Iniciar el soporte técnico',
       startDate: '2023-11-11T08:30:00.000Z',
       endDate: '2023-11-14T08:30:00.000Z',
-      status: false,
+      status: 'INPROGRESS',
       order: 9,
     },
   ];
@@ -94,11 +94,11 @@ export class TodoService {
   }
 
   get completedTodos() {
-    return this.todos.filter((todo) => todo.status === true).length;
+    return this.todos.filter((todo) => todo.status === 'DONE').length;
   }
 
   get pendingTodos() {
-    return this.todos.filter((todo) => todo.status === false).length;
+    return this.todos.filter((todo) => todo.status === 'INPROGRESS').length;
   }
 
   findAll(statusArgs: StatusArgs): Todo[] {
@@ -121,7 +121,7 @@ export class TodoService {
   create(createTodoInput: CreateTodoInput): Todo {
     const todo = new Todo();
     todo.description = createTodoInput.description;
-    todo.status = false;
+    todo.status = 'NEW';
     todo.id = Math.max(...this.todos.map((todo) => todo.id), 0) + 1;
     this.todos.push(todo);
     return todo;
@@ -132,7 +132,7 @@ export class TodoService {
     const todoToUpdate = this.findOne(id);
 
     if (description) todoToUpdate.description = description;
-    if (done !== undefined) todoToUpdate.status = done;
+    //if (done !== undefined) todoToUpdate.status = done;
 
     this.todos = this.todos.map((todo) => {
       //return (todo.id === id) ? todoToUpdate : todo; (Es lo mismo que abajo pero con el operador ternario)

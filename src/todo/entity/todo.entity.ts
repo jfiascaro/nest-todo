@@ -17,8 +17,8 @@ export class Todo {
   @Field(() => String) //String en mayúsculas
   description: string;
 
-  @Field(() => Boolean) //Boolean en mayúsculas
-  status: boolean = false;
+  @Field(() => String) //Boolean en mayúsculas
+  status: string;
 
   @Field(() => Int)
   order: number;

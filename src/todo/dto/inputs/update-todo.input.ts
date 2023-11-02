@@ -1,6 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import {
-  IsBoolean,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -23,8 +22,8 @@ export class UpdateTodoInput {
   @IsOptional()
   description?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  @IsBoolean()
+  @Field(() => String, { nullable: true })
+  @IsString()
   @IsOptional()
-  done?: boolean;
+  done?: string;
 }
